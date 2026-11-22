@@ -1,0 +1,26 @@
+plugins {
+    id 'java-library'
+    id 'com.cleanroommc.conventions'
+}
+
+base.archivesName = 'launcher-utils'
+
+conventions {
+    beginFrom = 2026
+}
+
+dependencies {
+    api 'com.cleanroommc:platform-utils:3.0.0'
+    // Minecraft 1.12.2 ships Gson 2.8.0, so consumers running in-game bring their own
+    compileOnlyApi 'com.google.code.gson:gson:2.8.0'
+    testImplementation 'com.google.code.gson:gson:2.8.0'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = 'launcher-utils'
+            from components.java
+        }
+    }
+}
