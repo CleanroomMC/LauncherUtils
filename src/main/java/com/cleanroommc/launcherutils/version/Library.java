@@ -103,9 +103,7 @@ public final class Library {
     }
 
     public Map<String, String> natives() {
-        return this.natives == null
-                ? Collections.emptyMap()
-                : Collections.unmodifiableMap(this.natives);
+        return this.natives == null ? Collections.emptyMap() : Collections.unmodifiableMap(this.natives);
     }
 
     /**

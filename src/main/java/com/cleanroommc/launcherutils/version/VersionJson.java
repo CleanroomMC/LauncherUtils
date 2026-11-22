@@ -143,9 +143,7 @@ public class VersionJson {
     }
 
     public Map<String, Download> downloads() {
-        return this.downloads == null
-                ? Collections.emptyMap()
-                : Collections.unmodifiableMap(this.downloads);
+        return this.downloads == null ? Collections.emptyMap() : Collections.unmodifiableMap(this.downloads);
     }
 
     public Download download(String key) {

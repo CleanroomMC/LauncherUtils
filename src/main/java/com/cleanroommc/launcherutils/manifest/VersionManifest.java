@@ -38,15 +38,11 @@ public final class VersionManifest {
     }
 
     public Optional<Entry> latestRelease() {
-        return this.latest == null || this.latest.release == null
-                ? Optional.empty()
-                : this.find(this.latest.release);
+        return this.latest == null || this.latest.release == null ? Optional.empty() : this.find(this.latest.release);
     }
 
     public Optional<Entry> latestSnapshot() {
-        return this.latest == null || this.latest.snapshot == null
-                ? Optional.empty()
-                : this.find(this.latest.snapshot);
+        return this.latest == null || this.latest.snapshot == null ? Optional.empty() : this.find(this.latest.snapshot);
     }
 
     private static final class Latest {

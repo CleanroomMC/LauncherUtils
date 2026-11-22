@@ -35,9 +35,7 @@ public final class MmcPack {
     }
 
     public List<Component> components() {
-        return this.components == null
-                ? Collections.emptyList()
-                : Collections.unmodifiableList(this.components);
+        return this.components == null ? Collections.emptyList() : Collections.unmodifiableList(this.components);
     }
 
     public Optional<Component> component(String uid) {

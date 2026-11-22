@@ -133,9 +133,7 @@ public final class Rule {
     }
 
     public Map<String, Boolean> features() {
-        return this.features == null
-                ? Collections.emptyMap()
-                : Collections.unmodifiableMap(this.features);
+        return this.features == null ? Collections.emptyMap() : Collections.unmodifiableMap(this.features);
     }
 
     public boolean appliesTo(RuleContext context) {
