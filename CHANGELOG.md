@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 - 2026-11-22
+
+### Bug Fix
+
+- Include equals and hashCode implementations *[commit by [@Rongmario](https://github.com/Rongmario) in [a2e9101](https://github.com/CleanroomMC/LauncherUtils/commit/a2e9101b8fbe792062e97232816e303965d4b8fa)]*
+
+**Full Changelog**: https://github.com/CleanroomMC/LauncherUtils/compare/1.0.0...1.0.1
+
 ## 1.0.0 - 2026-11-22
 
 ### Feature
