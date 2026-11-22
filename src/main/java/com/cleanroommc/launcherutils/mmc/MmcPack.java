@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -53,6 +54,23 @@ public final class MmcPack {
         }
         this.components.add(component);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        MmcPack that = (MmcPack) other;
+        return this.formatVersion == that.formatVersion && Objects.equals(this.components, that.components);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.formatVersion, this.components);
     }
 
     public static final class Component {
@@ -134,6 +152,30 @@ public final class MmcPack {
             }
             this.cachedRequires.add(requirement);
             return this;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Component that = (Component) other;
+            return Objects.equals(this.uid, that.uid)
+                    && Objects.equals(this.version, that.version)
+                    && Objects.equals(this.important, that.important)
+                    && Objects.equals(this.dependencyOnly, that.dependencyOnly)
+                    && Objects.equals(this.cachedName, that.cachedName)
+                    && Objects.equals(this.cachedVersion, that.cachedVersion)
+                    && Objects.equals(this.cachedRequires, that.cachedRequires);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.uid, this.version, this.important, this.dependencyOnly, this.cachedName,
+                    this.cachedVersion, this.cachedRequires);
         }
 
     }

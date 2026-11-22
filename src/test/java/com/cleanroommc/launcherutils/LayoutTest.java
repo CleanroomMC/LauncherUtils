@@ -32,7 +32,14 @@ class LayoutTest {
         assertThat(coordinate.withoutClassifier()).hasToString("org.lwjgl:lwjgl:3.3.3");
         assertThat(Coordinate.parse("de.oceanlabs.mcp:mcp:1.12.2@zip").fileName()).isEqualTo("mcp-1.12.2.zip");
         assertThat(Coordinate.parse("a:b:1@zip")).hasToString("a:b:1@zip");
-        assertThatThrownBy(() -> Coordinate.parse("a:b")).isInstanceOf(IllegalArgumentException.class);
+        assertThat(Coordinate.parse("g:a:1:")).isEqualTo(Coordinate.parse("g:a:1"));
+        for (String malformed : new String[] {
+                "", "g", "a:b", "g:a:1:x:y", ":a:1", "g::1", "g:a: ", "g:a:1@", "g:a:1@zip@jar"
+        }) {
+            assertThatThrownBy(() -> Coordinate.parse(malformed))
+                    .as(malformed)
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
     }
 
     @Test

@@ -5,6 +5,8 @@
 
 package com.cleanroommc.launcherutils.version;
 
+import java.util.Objects;
+
 /**
  * The Java runtime a version asks for, such as {@code java-runtime-delta} at major version 21.
  */
@@ -56,6 +58,23 @@ public final class JavaVersion {
 
     public int majorVersion() {
         return this.majorVersion;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        JavaVersion that = (JavaVersion) other;
+        return Objects.equals(this.component, that.component) && this.majorVersion == that.majorVersion;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.component, this.majorVersion);
     }
 
 }

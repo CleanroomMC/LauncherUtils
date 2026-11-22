@@ -7,6 +7,8 @@ package com.cleanroommc.launcherutils.mmc;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 /**
  * A component another component requires, pinned to one version or suggesting one.
  */
@@ -40,6 +42,25 @@ public final class MmcRequirement {
 
     public String suggests() {
         return this.suggests;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        MmcRequirement that = (MmcRequirement) other;
+        return Objects.equals(this.uid, that.uid)
+                && Objects.equals(this.exactVersion, that.exactVersion)
+                && Objects.equals(this.suggests, that.suggests);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.uid, this.exactVersion, this.suggests);
     }
 
 }

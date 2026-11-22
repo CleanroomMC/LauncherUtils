@@ -30,6 +30,12 @@ public final class Coordinate {
         return new Coordinate(group, artifact, version, null, null);
     }
 
+    /**
+     * Parses {@code group:artifact:version[:classifier][@extension]}. An empty classifier means none.
+     *
+     * @param notation the coordinate notation
+     * @throws IllegalArgumentException when a required part is blank or the notation has too many parts
+     */
     public static Coordinate parse(String notation) {
         String remainder = notation;
         String extension = null;
@@ -37,12 +43,19 @@ public final class Coordinate {
         if (at >= 0) {
             extension = remainder.substring(at + 1);
             remainder = remainder.substring(0, at);
+            if (isBlank(extension) || extension.indexOf('@') >= 0) {
+                throw new IllegalArgumentException("Not a Maven coordinate: " + notation);
+            }
         }
         String[] parts = remainder.split(":", -1);
-        if (parts.length < 3 || parts.length > 4) {
+        if (parts.length < 3 || parts.length > 4 || isBlank(parts[0]) || isBlank(parts[1]) || isBlank(parts[2])) {
             throw new IllegalArgumentException("Not a Maven coordinate: " + notation);
         }
         return new Coordinate(parts[0], parts[1], parts[2], parts.length == 4 ? parts[3] : null, extension);
+    }
+
+    private static boolean isBlank(String value) {
+        return value.trim().isEmpty();
     }
 
     public String group() {

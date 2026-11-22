@@ -15,6 +15,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A component's metadata, as in an instance's {@code patches/<uid>.json}. It extends version metadata with the
@@ -151,6 +152,37 @@ public final class MmcPatch extends VersionJson {
     public MmcPatch compatibleJavaMajor(int major) {
         this.compatibleJavaMajors = append(this.compatibleJavaMajors, major);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!super.equals(other)) {
+            return false;
+        }
+        MmcPatch that = (MmcPatch) other;
+        return this.formatVersion == that.formatVersion
+                && Objects.equals(this.uid, that.uid)
+                && Objects.equals(this.name, that.name)
+                && Objects.equals(this.version, that.version)
+                && Objects.equals(this.requires, that.requires)
+                && Objects.equals(this.conflicts, that.conflicts)
+                && Objects.equals(this.mainJar, that.mainJar)
+                && Objects.equals(this.jvmArgs, that.jvmArgs)
+                && Objects.equals(this.traits, that.traits)
+                && Objects.equals(this.tweakers, that.tweakers)
+                && Objects.equals(this.compatibleJavaMajors, that.compatibleJavaMajors)
+                && Objects.equals(this.compatibleJavaName, that.compatibleJavaName);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * super.hashCode()
+                + Objects.hash(this.formatVersion, this.uid, this.name, this.version, this.requires, this.conflicts,
+                        this.mainJar, this.jvmArgs, this.traits, this.tweakers, this.compatibleJavaMajors,
+                        this.compatibleJavaName);
     }
 
 }

@@ -10,6 +10,7 @@ import com.cleanroommc.launcherutils.LauncherGson;
 import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -45,10 +46,44 @@ public final class VersionManifest {
         return this.latest == null || this.latest.snapshot == null ? Optional.empty() : this.find(this.latest.snapshot);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        VersionManifest that = (VersionManifest) other;
+        return Objects.equals(this.latest, that.latest) && Objects.equals(this.versions, that.versions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.latest, this.versions);
+    }
+
     private static final class Latest {
 
         private String release;
         private String snapshot;
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Latest that = (Latest) other;
+            return Objects.equals(this.release, that.release) && Objects.equals(this.snapshot, that.snapshot);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.release, this.snapshot);
+        }
 
     }
 
@@ -97,6 +132,30 @@ public final class VersionManifest {
 
         public int complianceLevel() {
             return this.complianceLevel;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Entry that = (Entry) other;
+            return Objects.equals(this.id, that.id)
+                    && Objects.equals(this.type, that.type)
+                    && Objects.equals(this.url, that.url)
+                    && Objects.equals(this.time, that.time)
+                    && Objects.equals(this.releaseTime, that.releaseTime)
+                    && Objects.equals(this.sha1, that.sha1)
+                    && this.complianceLevel == that.complianceLevel;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.id, this.type, this.url, this.time, this.releaseTime, this.sha1,
+                    this.complianceLevel);
         }
 
     }

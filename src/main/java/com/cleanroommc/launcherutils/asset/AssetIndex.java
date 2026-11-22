@@ -14,6 +14,7 @@ import java.io.Reader;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * An asset index, as in {@code assets/indexes/<id>.json}.
@@ -67,6 +68,25 @@ public final class AssetIndex {
         return this;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        AssetIndex that = (AssetIndex) other;
+        return Objects.equals(this.objects, that.objects)
+                && Objects.equals(this.virtual, that.virtual)
+                && Objects.equals(this.mapToResources, that.mapToResources);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.objects, this.virtual, this.mapToResources);
+    }
+
     public static final class AssetObject {
 
         private String hash;
@@ -96,6 +116,23 @@ public final class AssetIndex {
 
         public String url() {
             return MojangEndpoints.RESOURCES + this.path();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            AssetObject that = (AssetObject) other;
+            return Objects.equals(this.hash, that.hash) && this.size == that.size;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.hash, this.size);
         }
 
     }

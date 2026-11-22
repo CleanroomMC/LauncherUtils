@@ -7,6 +7,8 @@ package com.cleanroommc.launcherutils.version;
 
 import com.cleanroommc.launcherutils.Coordinate;
 
+import java.util.Objects;
+
 /**
  * A file to download, with its hash and size.
  */
@@ -79,6 +81,26 @@ public class Download {
      */
     public boolean isEmbedded() {
         return this.url == null || this.url.trim().isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Download that = (Download) other;
+        return Objects.equals(this.path, that.path)
+                && Objects.equals(this.sha1, that.sha1)
+                && Objects.equals(this.size, that.size)
+                && Objects.equals(this.url, that.url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.path, this.sha1, this.size, this.url);
     }
 
 }

@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A version's metadata, as in {@code versions/<id>/<id>.json}.
@@ -336,6 +337,40 @@ public class VersionJson {
         return this;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        VersionJson that = (VersionJson) other;
+        return Objects.equals(this.id, that.id)
+                && Objects.equals(this.inheritsFrom, that.inheritsFrom)
+                && Objects.equals(this.type, that.type)
+                && Objects.equals(this.time, that.time)
+                && Objects.equals(this.releaseTime, that.releaseTime)
+                && Objects.equals(this.mainClass, that.mainClass)
+                && Objects.equals(this.minecraftArguments, that.minecraftArguments)
+                && Objects.equals(this.arguments, that.arguments)
+                && Objects.equals(this.assetIndex, that.assetIndex)
+                && Objects.equals(this.assets, that.assets)
+                && Objects.equals(this.downloads, that.downloads)
+                && Objects.equals(this.javaVersion, that.javaVersion)
+                && Objects.equals(this.logging, that.logging)
+                && Objects.equals(this.libraries, that.libraries)
+                && Objects.equals(this.complianceLevel, that.complianceLevel)
+                && Objects.equals(this.minimumLauncherVersion, that.minimumLauncherVersion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.inheritsFrom, this.type, this.time, this.releaseTime, this.mainClass,
+                this.minecraftArguments, this.arguments, this.assetIndex, this.assets, this.downloads, this.javaVersion,
+                this.logging, this.libraries, this.complianceLevel, this.minimumLauncherVersion);
+    }
+
     private List<String> render(List<Argument> arguments, RuleContext context, Substitutions substitutions) {
         List<String> rendered = new ArrayList<>();
         for (Argument argument : arguments) {
@@ -359,6 +394,23 @@ public class VersionJson {
 
         private List<Argument> game;
         private List<Argument> jvm;
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Arguments that = (Arguments) other;
+            return Objects.equals(this.game, that.game) && Objects.equals(this.jvm, that.jvm);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.game, this.jvm);
+        }
 
     }
 

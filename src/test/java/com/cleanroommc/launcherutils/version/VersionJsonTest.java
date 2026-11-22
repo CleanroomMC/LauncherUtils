@@ -165,6 +165,15 @@ class VersionJsonTest {
     }
 
     @Test
+    void equalMetadataIsEqual() throws IOException {
+        VersionJson first = fixture("1.12.2.json");
+        VersionJson second = fixture("1.12.2.json");
+        assertThat(first).isEqualTo(second).hasSameHashCodeAs(second);
+        assertThat(first).isNotEqualTo(fixture("1.21.4.json"));
+        assertThat(second.id("changed")).isNotEqualTo(first);
+    }
+
+    @Test
     void namesTheRuntimeForEachMajor() {
         assertThat(JavaVersion.forMajor(8).component()).isEqualTo("jre-legacy");
         assertThat(JavaVersion.forMajor(17).component()).isEqualTo("java-runtime-beta");

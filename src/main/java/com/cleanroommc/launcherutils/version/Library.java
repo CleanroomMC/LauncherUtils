@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * One entry of a {@code libraries} list.
@@ -214,6 +215,31 @@ public final class Library {
         return this;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Library that = (Library) other;
+        return Objects.equals(this.name, that.name)
+                && Objects.equals(this.url, that.url)
+                && Objects.equals(this.downloads, that.downloads)
+                && Objects.equals(this.natives, that.natives)
+                && Objects.equals(this.rules, that.rules)
+                && Objects.equals(this.extract, that.extract)
+                && Objects.equals(this.side, that.side)
+                && Objects.equals(this.mmcHint, that.mmcHint);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.name, this.url, this.downloads, this.natives, this.rules, this.extract, this.side,
+                this.mmcHint);
+    }
+
     private Downloads downloads() {
         if (this.downloads == null) {
             this.downloads = new Downloads();
@@ -226,11 +252,45 @@ public final class Library {
         private Download artifact;
         private Map<String, Download> classifiers;
 
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Downloads that = (Downloads) other;
+            return Objects.equals(this.artifact, that.artifact) && Objects.equals(this.classifiers, that.classifiers);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.artifact, this.classifiers);
+        }
+
     }
 
     private static final class Extract {
 
         private List<String> exclude;
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Extract that = (Extract) other;
+            return Objects.equals(this.exclude, that.exclude);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.exclude);
+        }
 
     }
 

@@ -5,6 +5,8 @@
 
 package com.cleanroommc.launcherutils.version;
 
+import java.util.Objects;
+
 /**
  * The logging configuration a version ships, keyed by side.
  */
@@ -29,6 +31,23 @@ public final class Logging {
     public Logging server(Config server) {
         this.server = server;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Logging that = (Logging) other;
+        return Objects.equals(this.client, that.client) && Objects.equals(this.server, that.server);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.client, this.server);
     }
 
     public static final class Config {
@@ -67,6 +86,25 @@ public final class Logging {
             return this;
         }
 
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Config that = (Config) other;
+            return Objects.equals(this.argument, that.argument)
+                    && Objects.equals(this.file, that.file)
+                    && Objects.equals(this.type, that.type);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.argument, this.file, this.type);
+        }
+
     }
 
     public static final class LogFile extends Download {
@@ -80,6 +118,23 @@ public final class Logging {
         public LogFile id(String id) {
             this.id = id;
             return this;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (!super.equals(other)) {
+                return false;
+            }
+            LogFile that = (LogFile) other;
+            return Objects.equals(this.id, that.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return 31 * super.hashCode() + Objects.hash(this.id);
         }
 
     }

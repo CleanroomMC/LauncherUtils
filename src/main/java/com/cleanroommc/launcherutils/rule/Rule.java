@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -147,6 +148,25 @@ public final class Rule {
         return this.os == null || this.os.matches(context);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Rule that = (Rule) other;
+        return Objects.equals(this.action, that.action)
+                && Objects.equals(this.os, that.os)
+                && Objects.equals(this.features, that.features);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.action, this.os, this.features);
+    }
+
     public enum Action {
 
         @SerializedName("allow") ALLOW,
@@ -163,6 +183,25 @@ public final class Rule {
         private static boolean sameSystem(String name, Platform platform) {
             OperatingSystem os = LauncherNames.parseOs(name);
             return os != OperatingSystem.UNKNOWN && LauncherNames.os(os).equals(LauncherNames.os(platform));
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || this.getClass() != other.getClass()) {
+                return false;
+            }
+            Os that = (Os) other;
+            return Objects.equals(this.name, that.name)
+                    && Objects.equals(this.arch, that.arch)
+                    && Objects.equals(this.version, that.version);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.name, this.arch, this.version);
         }
 
         private boolean matches(RuleContext context) {

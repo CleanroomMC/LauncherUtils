@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * One entry of an {@code arguments} list. It is written as a bare string, or as {@code rules} and a {@code value} that
@@ -60,6 +61,23 @@ public final class Argument {
         }
         this.rules.add(rule);
         return this;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
+        Argument that = (Argument) other;
+        return Objects.equals(this.values, that.values) && Objects.equals(this.rules, that.rules);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.values, this.rules);
     }
 
     /**
